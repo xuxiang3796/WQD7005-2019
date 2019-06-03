@@ -1,0 +1,9 @@
+if
+not (
+( close eq . or (-16.57652351<=close) and (close<=19.888099516))
+and ( high eq . or (-16.68265576<=high) and (high<=19.644596888))
+and ( low eq . or (-16.53009914<=low) and (low<=19.443007837))
+and ( open eq . or (-16.58975209<=open) and (open<=19.525009648))
+and ( vol eq . or (-315188.7143<=vol) and (vol<=352279.17305))
+)
+;

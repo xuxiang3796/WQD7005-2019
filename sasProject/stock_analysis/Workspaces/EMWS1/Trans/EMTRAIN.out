@@ -1,0 +1,27 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Summary
+
+            Measurement    Frequency
+Role           Level         Count
+
+INPUT        INTERVAL          5    
+INPUT        NOMINAL           2    
+REJECTED     INTERVAL          4    
+REJECTED     NOMINAL           1    
+TARGET       NOMINAL           1    
+ 
+                                                                                                                                                                                                                                                                
+ 
+Computed Transformations
+(maximum 500 observations printed)
+
+  Input                Input
+  Name       Role      Level          Name          Level            Formula
+
+REP_close    INPUT    INTERVAL    LOG_REP_close    INTERVAL    log(REP_close  + 1)
+REP_high     INPUT    INTERVAL    LOG_REP_high     INTERVAL    log(REP_high  + 1) 
+REP_low      INPUT    INTERVAL    LOG_REP_low      INTERVAL    log(REP_low  + 1)  
+REP_open     INPUT    INTERVAL    LOG_REP_open     INTERVAL    log(REP_open  + 1) 

@@ -1,0 +1,15 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Importance
+
+                     Number of    Number of
+Variable             Splitting    Surrogate
+  Name      Label      Rules        Rules      Importance
+
+ high                    2            0          1.00000 
+ open                    0            2          0.99991 
+ low                     0            2          0.99991 
+ close                   0            1          0.99766 
+ vol                     2            0          0.85922 

@@ -1,0 +1,62 @@
+*------------------------------------------------------------*
+ Node = 2
+*------------------------------------------------------------*
+if vol < 0.5
+then 
+ Tree Node Identifier   = 2
+ Number of Observations = 22
+ Predicted: trade_flag=sell = 0.00
+ Predicted: trade_flag=hold = 0.00
+ Predicted: trade_flag=buy = 1.00
+ 
+*------------------------------------------------------------*
+ Node = 5
+*------------------------------------------------------------*
+if vol >= 0.5 or MISSING
+AND stock_code IS ONE OF: 7216, 8125, 2984
+then 
+ Tree Node Identifier   = 5
+ Number of Observations = 49
+ Predicted: trade_flag=sell = 1.00
+ Predicted: trade_flag=hold = 0.00
+ Predicted: trade_flag=buy = 0.00
+ 
+*------------------------------------------------------------*
+ Node = 7
+*------------------------------------------------------------*
+if vol >= 0.5 or MISSING
+AND stock_code IS ONE OF: 5285, 7154, 9091, 5165 or MISSING
+AND Replacement: open >= 5.095
+then 
+ Tree Node Identifier   = 7
+ Number of Observations = 5
+ Predicted: trade_flag=sell = 1.00
+ Predicted: trade_flag=hold = 0.00
+ Predicted: trade_flag=buy = 0.00
+ 
+*------------------------------------------------------------*
+ Node = 8
+*------------------------------------------------------------*
+if vol < 50.5 AND vol >= 0.5
+AND stock_code IS ONE OF: 5285, 7154, 9091, 5165 or MISSING
+AND Replacement: open < 5.095 or MISSING
+then 
+ Tree Node Identifier   = 8
+ Number of Observations = 5
+ Predicted: trade_flag=sell = 1.00
+ Predicted: trade_flag=hold = 0.00
+ Predicted: trade_flag=buy = 0.00
+ 
+*------------------------------------------------------------*
+ Node = 9
+*------------------------------------------------------------*
+if vol >= 50.5 or MISSING
+AND stock_code IS ONE OF: 5285, 7154, 9091, 5165 or MISSING
+AND Replacement: open < 5.095 or MISSING
+then 
+ Tree Node Identifier   = 9
+ Number of Observations = 54
+ Predicted: trade_flag=sell = 0.17
+ Predicted: trade_flag=hold = 0.80
+ Predicted: trade_flag=buy = 0.04
+ 

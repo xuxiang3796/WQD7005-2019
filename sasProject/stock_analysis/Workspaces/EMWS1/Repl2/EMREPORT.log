@@ -1,0 +1,595 @@
+*------------------------------------------------------------*
+* Report Log
+Date:                May 12, 2019
+Time:                23:04:57
+*------------------------------------------------------------*
+17474  %let EMEXCEPTIONSTRING=;
+17475  *------------------------------------------------------------*;
+17476  * REPORT: Repl2;
+17477  *------------------------------------------------------------*;
+17478  %let EM_ACTION = REPORT;
+17479  %let syscc = 0;
+17480  filename x CATALOG 'SASHELP.EMUTIL.EM_VARMACRO.SOURCE';
+17481  %inc x;
+NOTE: %INCLUDE (level 1) file X is file SASHELP.EMUTIL.EM_VARMACRO.SOURCE.
+17483 +%macro em_varMacro(name=emMacro, metadata=, where=, key=NAME, nummacro=, maxvar=-1);
+17485 +   filename macFile catalog 'work.emutil.macro.source';
+17486 +   %let _METAOBS = 0;
+17487 +   %let _maxvar = &maxvar;
+17488 +   %if "&_maxvar" eq "" %then %let maxvar = -1;
+17490 +   %if (%sysfunc(exist(&metadata))<1 and %sysfunc(exist(&metadata, VIEW))<1)
+17491 +                   or (&metadata eq ) %then %do;
+17492 +       %put * No metadata data set defined;
+17493 +       %goto doend;
+17494 +   %end;
+17496 +   data _null_;
+17497 +      length _STRING_ $80;
+17498 +      retain _STRING_ '' maxvar 0;
+17499 +      set &metadata end=eof;
+17500 +      file macFile;
+17501 +      %if %nrbquote(&where) ne %then %do;
+17502 +          %let whereClause = where (%nrbquote(&where));
+17503 +          %unquote(&whereClause);
+17504 +      %end;
+17505 +      if _N_=1 then do;
+17506 +         string = "%"!!"macro &name;";
+17507 +         put string;
+17508 +      end;
+17509 +      maxvar +1;
+17510 +      if (length(_STRING_) + length(trim(&key))+ 4 < 80) then do;
+17511 +         _STRING_ = trim(_STRING_)!!' '!!trim(&key);
+17512 +         if eof
+17513 +            %if  %sysevalf(&_maxvar > 0) %then %do;
+17514 +                or maxvar >= &maxvar
+17515 +            %end;
+17516 +            then do;
+17517 +            put _STRING_;
+17518 +            string = "%"!!"mend &name;";
+17519 +            put string;
+17520 +            string = strip(put(_N_, best.));
+17521 +            call symput('_METAOBS', string);
+17522 +            %if (&nummacro ne ) %then %do;
+17523 +                put "%" "global &nummacro;";
+17524 +                put "%" "let &nummacro = " string ";";
+17525 +            %end;
+17526 +            stop;
+17527 +         end;
+17528 +      end;
+17529 +      else do;
+17530 +         put _STRING_;
+17531 +         _string_ = TRIM(&key);
+17532 +         if eof
+17533 +            %if  %sysevalf(&_maxvar > 0) %then %do;
+17534 +              or maxvar >= &maxvar
+17535 +           %end;
+17536 +            then do;
+17537 +            put _STRING_;
+17538 +            string = "%"!!"mend &name;";
+17539 +            put string;
+17540 +        end;
+17541 +      end;
+17542 +      if eof
+17543 +         %if  %sysevalf(&_maxvar > 0) %then %do;
+17544 +             or maxvar >= &maxvar
+17545 +         %end;
+17546 +         then do;
+17547 +         string = strip(put(_N_, best.));
+17548 +         call symput('_METAOBS', string);
+17549 +         %if (&nummacro ne ) %then %do;
+17550 +             put "%" "global &nummacro;";
+17551 +             put "%" "let &nummacro = " string ";";
+17552 +         %end;
+17553 +         stop;
+17554 +      end;
+17555 +   run;
+17557 +   %doend:
+17558 +   %if ^&_METAOBS %then %do;
+17559 +       data _null_;
+17560 +          file macFile;
+17561 +          put "%" "macro &name;";
+17562 +          put "%" "mend &name;";
+17563 +          %if (&nummacro ne ) %then %do;
+17564 +              put "%" "global &nummacro;";
+17565 +              put "%" "let &nummacro = 0;";
+17566 +          %end;
+17567 +      run;
+17568 +   %end;
+17569 +   %inc macFile;
+17570 +   filename macFile;
+17571 +%mend em_varMacro;
+NOTE: %INCLUDE (level 1) ending.
+17572  filename X;
+NOTE: Fileref X has been deassigned.
+17573   %macro main;
+17574  
+17575     filename temp catalog 'sashelp.emmdfy.Replace_macros.source';
+17576     %include temp;
+17577     filename temp;
+17578  
+17579     %if %upcase(&EM_ACTION) = CREATE %then %do;
+17580  
+17581         filename temp catalog 'sashelp.emmdfy.Replace_create.source';
+17582         %include temp;
+17583         filename temp;
+17584         %create;
+17585     %end;
+17586     %else
+17587     %if %upcase(&EM_ACTION) = TRAIN %then %do;
+17588  
+17589         filename temp catalog 'sashelp.emmdfy.Replace_train.source';
+17590         %include temp;
+17591         filename temp;
+17592         %train;
+17593     %end;
+17594     %else
+17595     %if %upcase(&EM_ACTION) = SCORE %then %do;
+17596  
+17597         filename temp catalog 'sashelp.emmdfy.Replace_score.source';
+17598         %include temp;
+17599         filename temp;
+17600         %score;
+17601     %end;
+17602     %if %upcase(&EM_ACTION) = REPORT %then %do;
+17603  
+17604         filename temp catalog 'sashelp.emmdfy.Replace_report.source';
+17605         %include temp;
+17606         filename temp;
+17607         %report;
+17608     %end;
+17609     %if %upcase(&EM_ACTION) = OPENOUTCLASSTABLE %then %do;
+17610         filename temp catalog 'sashelp.emmdfy.replace_makeoutclass.source';
+17611         %include temp;
+17612         filename temp;
+17613         %em_replace_openoutclass;
+17614     %end;
+17615     %if %upcase(&EM_ACTION) = CLOSEOUTCLASSTABLE %then %do;
+17616         filename temp catalog 'sashelp.emmdfy.replace_makeoutclass.source';
+17617         %include temp;
+17618         filename temp;
+17619         %em_replace_closeoutclass;
+17620     %end;
+17621  %mend main;
+17622  
+17623  %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMMDFY.REPLACE_MACROS.SOURCE.
+17624 +%macro SetProperties;
+17625 +   %em_checkmacro(name=EM_PROPERTY_UNKNOWNLEVEL,    global=Y, value=MODE);
+17626 +   %em_checkmacro(name=EM_PROPERTY_CALCMETHOD,      global=Y, value=NONE);
+17627 +   %em_checkmacro(name=EM_PROPERTY_PERCENTSCUTOFF,  global=Y, value=0.5);
+17628 +   %em_checkmacro(name=EM_PROPERTY_SPACINGSCUTOFF,  global=Y, value=9);
+17629 +   %em_checkMacro(name=EM_PROPERTY_MADSCUTOFF,      global=Y, value=9);
+17630 +   %em_checkMacro(name=EM_PROPERTY_STDDEVCUTOFF,    global=Y, value=3);
+17631 +   %em_checkmacro(name=EM_PROPERTY_REPLACEMETHOD,   global=Y, value=COMPUTED);
+17632 +   %em_checkmacro(name=EM_PROPERTY_HIDEVARIABLE,    global=Y, value=N);
+17633 +   %em_checkmacro(name=EM_PROPERTY_INTERVALMETHOD,  global=Y, value=NONE);
+17634 +   %em_checkmacro(name=EM_PROPERTY_REPORTCOUNT,     global=Y, value=Y);
+17635 +
+17636 +%mend SetProperties;
+17637 +
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMMDFY.REPLACE_REPORT.SOURCE.
+17638 +%macro makeNameDs(namedata=, limitDs=, classname=);
+17639 +    %let classnum=0;
+17640 +    %let dsid = %sysfunc(open(&classname));
+17641 +    %if &dsid>0 %then %do;
+17642 +        %let classnum = %sysfunc(attrn(&dsid, NOBS));
+17643 +        %let dsid = %sysfunc(close(&dsid));
+17644 +    %end;
+17645 +
+17646 +    %let varnum=0;
+17647 +    %let dsid = %sysfunc(open(&LimitDs));
+17648 +    %if &dsid>0 %then %do;
+17649 +        %let varnum = %sysfunc(attrn(&dsid, NOBS));
+17650 +        %let dsid = %sysfunc(close(&dsid));
+17651 +    %end;
+17652 +    %if ^&varnum and  ^&classnum %then %goto doendmnd;
+17653 +
+17654 +    data &nameData;
+17655 +       set
+17656 +       %if &varnum %then %do;
+17657 +          &limitDs
+17658 +      %end;
+17659 +      %if &classnum %then %do;
+17660 +          &classname
+17661 +      %end;
+17662 +    ;
+17663 +    run;
+17664 +    proc sort data=&nameData;
+17665 +       by name;
+17666 +    run;
+17667 +
+17668 +    %doendmnd:
+17669 +%mend makeNameDs;
+17670 +
+17671 +%macro countReplace(FileRef1=, dataRole=, data=, CountData=);
+17672 +   %if (^%sysfunc(exist(&data)) and ^%sysfunc(exist(&data, VIEW))) or (&data eq ) %then %goto doendm;
+17673 +
+17674 +   data _temp;
+17675 +      length DataRole $8;
+17676 +      DataRole ="&DataRole";
+17677 +      array _ReplaceCount{&ReplaceNum} (
+17678 +      %do i=1 %to &ReplaceNum;
+17679 +          0
+17680 +      %end;
+17681 +      );
+17682 +      array _DIFF{&ReplaceNum};
+17683 +      retain _ReplaceCount1 -- _ReplaceCount&ReplaceNum;
+17684 +      set &data end=eof;
+17685 +      %inc &FileRef1;
+17686 +      do i=1 to &ReplaceNum;
+17687 +         if _DIFF(i) then _ReplaceCount(i) = _ReplaceCount(i)+1;
+17688 +      end;
+17689 +      keep DataRole _ReplaceCount:;
+17690 +      if eof then
+17691 +         output;
+17692 +   run;
+17693 +   proc append base=&CountData data=_temp;
+17694 +   run;
+17695 +   proc datasets lib=WORK nolist;
+17696 +      delete _temp;
+17697 +   run;
+17698 +
+17699 +   %doendm:
+17700 +
+17701 +%mend;
+17702 +
+17703 +%macro makeCountReport(nameData=, outData=countData);
+17704 +   %if ^%sysfunc(exist(&nameData))%then %goto doendmc;
+17705 +
+17706 +   %global ReplaceNum;
+17707 +   %let ReplaceNum=0;
+17708 +   %let dsid = %sysfunc(open(&namedata));
+17709 +   %if &dsid>0 %then %do;
+17710 +       %let ReplaceNum = %sysfunc(attrn(&dsid, NOBS));
+17711 +       %let dsid = %sysfunc(close(&dsid));
+17712 +   %end;
+17713 +   %if ^&ReplaceNum %then %goto doendmc;
+17714 +
+17715 +   %EM_REGISTER(key=DiffCode, TYPE=FILE, EXTENSION=sas);
+17716 +   filename _F1 "&EM_USER_DiffCode";
+17717 +
+17718 +   data _null_;
+17719 +      length string $200;
+17720 +      set &namedata;
+17721 +      file _F1;
+17722 +      string = 'Label '!!'_ReplaceCount'!!strip(put(_N_,BEST.))!!' = "'!!strip(name)!!'";';
+17723 +      put string;
+17724 +      string = 'if '!!strip(NAME)!!' ne '!!strip(newname)!!' then ';
+17725 +      put string;
+17726 +      string = '_DIFF'!!strip(put(_N_,BEST.))!!'= 1;';
+17727 +      put string;
+17728 +      put ' else ';
+17729 +      string = '_DIFF'!!strip(put(_N_,BEST.))!!'= 0;';
+17730 +      put string;
+17731 +   run;
+17732 +   %countReplace(FileRef1=_F1, dataRole=Train, data=&EM_EXPORT_TRAIN,    CountData=_tempCount);
+17733 +   %countReplace(FileRef1=_F1, dataRole=Valide,data=&EM_EXPORT_VALIDATE, CountData=_tempCount);
+17734 +   %countReplace(FileRef1=_F1, dataRole=Test,  data=&EM_EXPORT_TEST,     CountData=_tempCount);
+17735 +
+17736 +   filename _F1;
+17737 +
+17738 +   %let validateFlag = 0;
+17739 +   %let testFlag     = 0;
+17740 +   %if (%sysfunc(exist(&EM_IMPORT_VALIDATE)) or %sysfunc(exist(&EM_IMPORT_VALIDATE, VIEW)))
+17741 +                  and (&EM_IMPORT_VALIDATE ne ) %then %do;
+17742 +        %let validateFlag = 1;
+17743 +    %end;
+17744 +    %if (%sysfunc(exist(&EM_IMPORT_TEST)) or %sysfunc(exist(&EM_IMPORT_TEST, VIEW)))
+17745 +                    and (&EM_IMPORT_TEST ne ) %then %do;
+17746 +          %let testFlag   = 1;
+17747 +    %end;
+17748 +
+17749 +    proc transpose data=_tempCount out=&outData(drop=_NAME_ rename=(_LABEL_=NAME Col1=TRAIN
+17750 +      %if &validateFlag = 1 %then %do;
+17751 +          Col2=VALIDATE
+17752 +      %end;
+17753 +      %if &testFlag = 1 %then %do;
+17754 +          Col3=TEST
+17755 +      %end;
+17756 +
+17757 +      ));
+17758 +   run;
+17759 +
+17760 +   %let lib = WORK;
+17761 +   %if %index(&outData, .) %then %do;
+17762 +       %let lib    = %scan(&outData, 1, .);
+17763 +       %let member = %scan(&outData, 2, .);
+17764 +   %end;
+17765 +   %else
+17766 +       %let member = &outData;
+17767 +  proc sort data=&outdata;
+17768 +     by name;
+17769 +  run;
+17770 +  data &outData;
+17771 +      merge &namedata(keep=NAME ROLE LABEL) &outData;
+17772 +      by NAME;
+17773 +   run;
+17774 +   proc datasets lib=&lib nolist;
+17775 +      modify &member;
+17776 +      label NAME =  "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))"
+17777 +            ROLE =  "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel   , NOQUOTE))"
+17778 +            LABEL=  "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel  , NOQUOTE))"
+17779 +            TRAIN=  "%sysfunc(sasmsg(sashelp.dmine, rpt_train_vlabel   , NOQUOTE))"
+17780 +      %if &validateFlag = 1 %then %do;
+17781 +            VALIDATE= "%sysfunc(sasmsg(sashelp.dmine, rpt_validate_vlabel   , NOQUOTE))"
+17782 +      %end;
+17783 +      %if &testFlag = 1 %then %do;
+17784 +            TEST= "%sysfunc(sasmsg(sashelp.dmine, rpt_test_vlabel   , NOQUOTE))"
+17785 +      %end;
+17786 +      ;
+17787 +   run;
+17788 +   proc print data=&em_user_count label;
+17789 +      title9  ' ';
+17790 +      title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_replacecount_title, NOQUOTE))";
+17791 +   run;
+17792 +   title10;
+17793 +   proc datasets lib=WORK nolist;
+17794 +      delete _tempCount;
+17795 +   run;
+17796 +
+17797 +  %doendmc:
+17798 +%mend makeCountReport;
+17799 +
+17800 +%macro report;
+17801 +   %em_getname(key=COUNT,        type=DATA);
+17802 +   %em_getname(key=REPORTLIMITS, type=DATA);
+17803 +   %em_getname(key=LIMITS,       type=DATA);
+17804 +   %em_getname(key=CLASSINFO,    type=DATA);
+17805 +
+17806 +  /* Generating Reports */
+17807 +   %let lib     = %scan(&EM_USER_COUNT, 1, .);
+17808 +   %let member =;
+17809 +   %if %sysfunc(exist(&em_user_reportlimits)) %then %let member = %scan(&EM_USER_REPORTLIMITS, 2, .);
+17810 +   %if %sysfunc(exist(&em_user_count))        %then %let member = &member %scan(&EM_USER_count, 2, .);
+17811 +   %if "&member" ne "" %then %do;
+17812 +       proc datasets lib=&lib nolist;
+17813 +         delete &member;
+17814 +       run;
+17815 +       quit;
+17816 +   %end;
+17817 +
+17818 +   %let limitFlag = %sysfunc(exist(&em_user_limits));
+17819 +    %if ^&limitFlag and  ^%sysfunc(exist(&em_user_classinfo)) %then %goto doendr;
+17820 +
+17821 +    %if &limitFlag %then %do;
+17822 +        data &em_user_reportlimits;
+17823 +           set &em_user_limits;
+17824 +           label REPLACEMETHODUSED = "%sysfunc(sasmsg(sashelp.dmine, rpt_replacemethod_vlabel, NOQUOTE))"
+17825 +                 REPLACEMINUSED    = "%sysfunc(sasmsg(sashelp.dmine, rpt_replacemin_vlabel, NOQUOTE))"
+17826 +                 REPLACEMAXUSED    = "%sysfunc(sasmsg(sashelp.dmine, rpt_replacemax_vlabel, NOQUOTE))";
+17827 +           drop ROLE LEVEL REPLACEMETHOD REPLACEMIN REPLACEMAX;
+17828 +        run;
+17829 +        %EM_REPORT(key=REPORTLIMITS,  viewtype=DATA, block=MODEL, description=ReplaceInterval, autoDisplay=Y);
+17830 +    %end;
+17831 +
+17832 +    %if &em_property_CountReport=Y %then %do;
+17833 +        %makeNameDs(namedata=newVarInfo, limitDs=&em_user_limits, classname=&em_user_classinfo);
+17834 +
+17835 +        %let labeloption = %sysfunc(getoption(label));
+17836 +        options LABEL;run;
+17837 +
+17838 +        %makeCountReport(namedata=newVarInfo, outdata=&EM_USER_COUNT);
+17839 +
+17840 +        options &labeloption;run;
+17841 +
+17842 +        %EM_REPORT(key=COUNT, viewtype=DATA, block=MODEL, description=ReplaceCount, autoDisplay=Y);
+17843 +   %end;
+17844 +   proc datasets lib=WORK nolist;
+17845 +      delete newVarInfo;
+17846 +   run;
+17847 +   %doendr:
+17848 +%mend report;
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+
+NOTE: There were 2 observations read from the data set EMWS1.REPL2_CLASSINFO.
+NOTE: The data set WORK.NEWVARINFO has 2 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 2 observations read from the data set WORK.NEWVARINFO.
+NOTE: The data set WORK.NEWVARINFO has 2 observations and 8 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 3 observations read from the data set WORK.EM_USER_KEY.
+NOTE: The data set WORK.EM_USER_KEY has 4 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The file _F1 is:
+      Filename=C:\Users\dante\Documents\My SAS Files\9.4\stock3\Workspaces\EMWS1\Repl2\DiffCode.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=0,
+      Last Modified=12May2019:23:04:57,
+      Create Time=09May2019:20:38:36
+
+NOTE: 10 records were written to the file _F1.
+      The minimum record length was 6.
+      The maximum record length was 38.
+NOTE: There were 2 observations read from the data set WORK.NEWVARINFO.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: %INCLUDE (level 1) file _F1 is file C:\Users\dante\Documents\My SAS Files\9.4\stock3\Workspaces\EMWS1\Repl2\DiffCode.sas.
+17849 +Label _ReplaceCount1 = "change_flag";
+17850 +if change_flag ne REP_change_flag then
+17851 +_DIFF1= 1;
+17852 + else
+17853 +_DIFF1= 0;
+17854 +Label _ReplaceCount2 = "trade_flag";
+17855 +if trade_flag ne REP_trade_flag then
+17856 +_DIFF2= 1;
+17857 + else
+17858 +_DIFF2= 0;
+NOTE: %INCLUDE (level 1) ending.
+
+NOTE: There were 135 observations read from the data set EMWS1.PART_TRAIN.
+NOTE: View EMWS1.REPL2_TRAIN.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.03 seconds
+      
+NOTE: There were 135 observations read from the data set EMWS1.TRANS_TRAIN.
+NOTE: There were 135 observations read from the data set EMWS1.REPL2_TRAIN.
+NOTE: The data set WORK._TEMP has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.04 seconds
+      
+
+
+NOTE: Appending WORK._TEMP to WORK._TEMPCOUNT.
+NOTE: BASE data set does not exist. DATA file is being copied to BASE file.
+NOTE: There were 1 observations read from the data set WORK._TEMP.
+NOTE: The data set WORK._TEMPCOUNT has 1 observations and 3 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: Deleting WORK._TEMP (memtype=DATA).
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: %INCLUDE (level 1) file _F1 is file C:\Users\dante\Documents\My SAS Files\9.4\stock3\Workspaces\EMWS1\Repl2\DiffCode.sas.
+17859 +Label _ReplaceCount1 = "change_flag";
+17860 +if change_flag ne REP_change_flag then
+17861 +_DIFF1= 1;
+17862 + else
+17863 +_DIFF1= 0;
+17864 +Label _ReplaceCount2 = "trade_flag";
+17865 +if trade_flag ne REP_trade_flag then
+17866 +_DIFF2= 1;
+17867 + else
+17868 +_DIFF2= 0;
+NOTE: %INCLUDE (level 1) ending.
+
+NOTE: There were 61 observations read from the data set EMWS1.PART_VALIDATE.
+NOTE: View EMWS1.REPL2_VALIDATE.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+NOTE: There were 61 observations read from the data set EMWS1.TRANS_VALIDATE.
+NOTE: There were 61 observations read from the data set EMWS1.REPL2_VALIDATE.
+NOTE: The data set WORK._TEMP has 1 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+
+
+NOTE: Appending WORK._TEMP to WORK._TEMPCOUNT.
+NOTE: There were 1 observations read from the data set WORK._TEMP.
+NOTE: 1 observations added.
+NOTE: The data set WORK._TEMPCOUNT has 2 observations and 3 variables.
+NOTE: PROCEDURE APPEND used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: Deleting WORK._TEMP (memtype=DATA).
+NOTE: Fileref _F1 has been deassigned.
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: There were 2 observations read from the data set WORK._TEMPCOUNT.
+NOTE: The data set EMWS1.REPL2_COUNT has 2 observations and 3 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 2 observations read from the data set EMWS1.REPL2_COUNT.
+NOTE: The data set EMWS1.REPL2_COUNT has 2 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: Multiple lengths were specified for the BY variable Name by input data sets. This might cause unexpected results.
+NOTE: There were 2 observations read from the data set WORK.NEWVARINFO.
+NOTE: There were 2 observations read from the data set EMWS1.REPL2_COUNT.
+NOTE: The data set EMWS1.REPL2_COUNT has 2 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: MODIFY was successful for EMWS1.REPL2_COUNT.DATA.
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: There were 2 observations read from the data set EMWS1.REPL2_COUNT.
+NOTE: The PROCEDURE PRINT printed page 3.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: Deleting WORK._TEMPCOUNT (memtype=DATA).
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: The data set WORK.EM_USER_REPORT has 132 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: Deleting WORK.NEWVARINFO (memtype=DATA).
+17869  *------------------------------------------------------------*;
+17870  * End REPORT: Repl2;
+17871  *------------------------------------------------------------*;
+17872  
+17873  /* Reset EM Options */
+17874  options formchar="|----|+|---+=|-/\<>*";
+17875  options nocenter ls=256 ps=10000;
+17876  goptions reset=all device=GIF NODISPLAY;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+17877  proc sort data=WORK.EM_USER_REPORT;
+17878  by ID VIEW;
+17879  run;
+
+NOTE: There were 132 observations read from the data set WORK.EM_USER_REPORT.
+NOTE: The data set WORK.EM_USER_REPORT has 132 observations and 4 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+

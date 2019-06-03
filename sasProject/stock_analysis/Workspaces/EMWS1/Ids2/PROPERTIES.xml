@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?><_ROOT_  DataSource="stockstrain1" Scope="LOCAL" Role="RAW" Library="AAEM61" Table="STOCKS7_TRAIN"
+ NCols="10" NObs="196" NBytes="66560" Segment="" DataSourceRole="RAW" OutputType="VIEW"
+ ForceRun="N" ComputeStatistics="N" DataSelection="DATASOURCE" NewTable="" MetaAdvisor="BASIC"
+ ApplyIntervalLevelLowerLimit="Y" IntervalLowerLimit="20" ApplyMaxPercentMissing="Y"
+ MaxPercentMissing="50" ApplyMaxClassLevels="Y" MaxClassLevels="20" IdentifyEmptyColumns="Y"
+ VariableValidation="STRICT" NewVariableRole="REJECT" DropMapVariables="Y" DsId="stockstrain1"
+ DsSampleName="" DsSampleSizeType="" DsSampleSize="" DsCreatedBy="dante" DsCreateDate="1873302513"
+ DsModifiedBy="dante" DsModifyDate="1873302513" DsScope="LOCAL" Sample="D" SampleSizeType="PERCENT"
+ SampleSizePercent="20" SampleSizeObs="10000" DBPassThrough="Y" RunAction="Train"
+ Component="DataSource" RawCreateTime="1873302529.1" CreateTime="12MAY2019:17:48:49"
+ Description="" Data="AAEM61.STOCKS7_TRAIN" CMeta="WORK.M30GW3NG" RunId="e44c9740-57e5-490a-af31-a57f236c9f51"
+>
+<VARIABLEPROPERTIES/>
+<FILEPROPERTIES/>
+</_ROOT_>

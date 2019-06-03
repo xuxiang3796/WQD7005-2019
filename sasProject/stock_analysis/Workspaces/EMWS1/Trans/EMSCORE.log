@@ -1,0 +1,154 @@
+*------------------------------------------------------------*
+* Score Log
+Date:                May 12, 2019
+Time:                23:04:52
+*------------------------------------------------------------*
+11278  proc sort data=EMWS1.Trans_RESULT out=WORK.TransRESULT NOTHREADS;
+11279  by INPUTNAME;
+11280  run;
+
+NOTE: There were 4 observations read from the data set EMWS1.TRANS_RESULT.
+NOTE: The data set WORK.TRANSRESULT has 4 observations and 11 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+11281  proc sort data=EMWS1.Trans_VariableSet(KEEP= NAME FAMILY REPORT rename=(NAME=INPUTNAME)) out=WORK.TransVARSET NOTHREADS;
+11282  by INPUTNAME;
+11283  run;
+
+NOTE: There were 13 observations read from the data set EMWS1.TRANS_VARIABLESET.
+NOTE: The data set WORK.TRANSVARSET has 13 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+11284  data WORK.TransRESULT;
+11285  merge WORK.TransRESULT WORK.TransVARSET;
+11286  by INPUTNAME;
+11287  if NAME ne '' then output;
+11288  run;
+
+WARNING: Multiple lengths were specified for the BY variable INPUTNAME by input data sets. This might cause unexpected results.
+NOTE: There were 4 observations read from the data set WORK.TRANSRESULT.
+NOTE: There were 13 observations read from the data set WORK.TRANSVARSET.
+NOTE: The data set WORK.TRANSRESULT has 4 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11289  filename _code "C:\Users\dante\Documents\My SAS Files\9.4\stock3\Workspaces\EMWS1\Trans\TRAINDELTACODE.sas";
+11290  data _null_;
+11291  set WORK.TransRESULT;
+11292  length String $200;
+11293  file _code;
+11294  String = 'if NAME="'!!strip(name)!!'" then do;';
+11295  put / String;
+11296  if family ne '' then do;
+11297  String = '   FAMILY ="'!!strip(family)!!'";';
+11298  put String;
+11299  end;
+11300  select(formula);
+11301  when('Interaction') put '   FAMILY  ="INTERACTION";';
+11302  when('') put '   COMMENT = "' method 'transformation of ' INPUTVAR '";';
+11303  otherwise put '   COMMENT = "' formula '";';
+11304  end;
+11305  String = '   ROLE ="'!!strip(role)!!'";';
+11306  put String;
+11307  if REPORT="" then REPORT = "N";
+11308  String = '   REPORT ="'!!strip(report)!!'";';
+11309  put String;
+11310  String = '   LEVEL  ="'!!strip(level)!!'";';
+11311  put String;
+11312  put 'end;';
+11313  if formula ne 'Interaction' and INPUTNAME ne '' then do;
+11314  String = 'if NAME="'!!strip(INPUTNAME)!!'" then delete;';
+11315  put String;
+11316  end;
+11317  run;
+
+NOTE: Variable method is uninitialized.
+NOTE: Variable INPUTVAR is uninitialized.
+NOTE: The file _CODE is:
+      Filename=C:\Users\dante\Documents\My SAS Files\9.4\stock3\Workspaces\EMWS1\Trans\TRAINDELTACODE.sas,
+      RECFM=V,LRECL=32767,File Size (bytes)=0,
+      Last Modified=12May2019:23:04:51,
+      Create Time=09May2019:20:21:11
+
+NOTE: 32 records were written to the file _CODE.
+      The minimum record length was 0.
+      The maximum record length was 36.
+NOTE: There were 4 observations read from the data set WORK.TRANSRESULT.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11318  filename _code;
+NOTE: Fileref _CODE has been deassigned.
+
+11319  filename emflow "C:\Users\dante\Documents\My SAS Files\9.4\stock3\Workspaces\EMWS1\Trans\EMFLOWSCORE.sas";
+11320  *------------------------------------------------------------*;
+11321  * Trans: Scoring DATA data;
+11322  *------------------------------------------------------------*;
+11323  data EMWS1.Trans_TRAIN
+11324  / view=EMWS1.Trans_TRAIN
+11325  ;
+11326  set EMWS1.Part_TRAIN
+11327  ;
+11328  %inc emflow;
+11368  run;
+
+NOTE: DATA STEP view saved on file EMWS1.TRANS_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+11369  quit;
+11370  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+11371  filename emflow "C:\Users\dante\Documents\My SAS Files\9.4\stock3\Workspaces\EMWS1\Trans\EMFLOWSCORE.sas";
+11372  *------------------------------------------------------------*;
+11373  * Trans: Scoring VALIDATE data;
+11374  *------------------------------------------------------------*;
+11375  data EMWS1.Trans_VALIDATE
+11376  / view=EMWS1.Trans_VALIDATE
+11377  ;
+11378  set EMWS1.Part_VALIDATE
+11379  ;
+11380  %inc emflow;
+11420  run;
+
+NOTE: DATA STEP view saved on file EMWS1.TRANS_VALIDATE.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11421  quit;
+11422  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+11423  *------------------------------------------------------------*;
+11424  * Trans: Computing metadata for TRAIN data;
+11425  *------------------------------------------------------------*;
+
+NOTE: View EMWS1.TRANS_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: View EMWS1.TRANS_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: View EMWS1.TRANS_VALIDATE.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.03 seconds
+      

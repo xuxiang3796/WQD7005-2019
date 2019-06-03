@@ -1,0 +1,14 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Limits and Replacement Values for Interval Variables
+
+                                     Lower                   Upper
+             Replace     Lower    Replacement    Upper    Replacement
+Variable    Variable     limit       Value       Limit       Value
+
+ close      REP_close     0.01         .           .           .     
+ high       REP_high      0.01         .           .           .     
+ low        REP_low       0.01         .           .           .     
+ open       REP_open      0.01         .           .           .     

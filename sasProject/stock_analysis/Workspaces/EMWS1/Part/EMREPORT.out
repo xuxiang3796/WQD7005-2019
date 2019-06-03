@@ -1,0 +1,34 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Summary Statistics for Class Targets
+
+Data=DATA
+
+              Numeric    Formatted    Frequency
+ Variable      Value       Value        Count      Percent    Label
+
+trade_flag       .         buy            35       17.8571         
+trade_flag       .         hold           63       32.1429         
+trade_flag       .         sell           98       50.0000         
+
+
+Data=TRAIN
+
+              Numeric    Formatted    Frequency
+ Variable      Value       Value        Count      Percent    Label
+
+trade_flag       .         buy            24       17.7778         
+trade_flag       .         hold           43       31.8519         
+trade_flag       .         sell           68       50.3704         
+
+
+Data=VALIDATE
+
+              Numeric    Formatted    Frequency
+ Variable      Value       Value        Count      Percent    Label
+
+trade_flag       .         buy            11       18.0328         
+trade_flag       .         hold           20       32.7869         
+trade_flag       .         sell           30       49.1803         

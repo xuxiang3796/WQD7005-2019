@@ -1,0 +1,57 @@
+*------------------------------------------------------------*
+* Score Log
+Date:                May 12, 2019
+Time:                22:31:48
+*------------------------------------------------------------*
+11527  *------------------------------------------------------------*;
+11528  * Ids2: Computing metadata for DATA data;
+11529  *------------------------------------------------------------*;
+
+NOTE: View EMWS1.IDS2_DATA.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+11530  data EMWS1.Ids2_EMINFO;
+11531  length TARGET KEY $32 DATA $43;
+11532  TARGET="";
+11533  KEY="IDSTABLE";
+11534  DATA="AAEM61.STOCKS7_TRAIN";
+11535  output;
+11536  TARGET="trade_flag";
+11537  KEY="DECDATA";
+11538  DATA="EMWS1.Ids2_trade_flag_DD";
+11539  output;
+11540  TARGET="trade_flag";
+11541  KEY="DECMETA";
+11542  DATA="EMWS1.Ids2_trade_flag_DM";
+11543  output;
+11544  TARGET="";
+11545  KEY="STATS";
+11546  DATA="EMWS1.Ids2_EMSTATDEFAULT";
+11547  output;
+11548  run;
+
+NOTE: The data set EMWS1.IDS2_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: View EMWS1.IDS2_DATA.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+11549  data EMWS1.Ids2_CMeta_DATA;
+11550  set EMWS1.Ids2_VariableSet;
+11551  drop DROP;
+11552  where DROP='N';
+11553  run;
+
+NOTE: There were 10 observations read from the data set EMWS1.IDS2_VARIABLESET.
+      WHERE DROP='N';
+NOTE: The data set EMWS1.IDS2_CMETA_DATA has 10 observations and 20 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+

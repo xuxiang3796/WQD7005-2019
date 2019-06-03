@@ -1,0 +1,12 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Replacement Counts
+
+Obs    Variable    Label    Role     Train
+
+ 1      close      close    INPUT       0 
+ 2      high       high     INPUT      33 
+ 3      low        low      INPUT      33 
+ 4      open       open     INPUT      33 

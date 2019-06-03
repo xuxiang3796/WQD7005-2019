@@ -1,0 +1,229 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Summary
+
+            Measurement    Frequency
+Role           Level         Count
+
+INPUT        BINARY            3    
+INPUT        INTERVAL          5    
+INPUT        NOMINAL           2    
+REJECTED     INTERVAL          4    
+REJECTED     NOMINAL           3    
+TARGET       NOMINAL           1    
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Model Events
+
+                                          Number
+                           Measurement      of
+    Target        Event       Level       Levels      Order                Label
+
+REP_trade_flag      S        NOMINAL         3      Descending    Replacement: trade_flag
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Predicted and decision variables
+
+Type             Variable                    Label
+
+TARGET       REP_trade_flag       Replacement: trade_flag    
+PREDICTED    P_REP_trade_flagS    Predicted: REP_trade_flag=S
+RESIDUAL     R_REP_trade_flagS    Residual: REP_trade_flag=S 
+PREDICTED    P_REP_trade_flagH    Predicted: REP_trade_flag=H
+RESIDUAL     R_REP_trade_flagH    Residual: REP_trade_flag=H 
+PREDICTED    P_REP_trade_flagB    Predicted: REP_trade_flag=B
+RESIDUAL     R_REP_trade_flagB    Residual: REP_trade_flag=B 
+FROM         F_REP_trade_flag     From: REP_trade_flag       
+INTO         I_REP_trade_flag     Into: REP_trade_flag       
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+
+The DMREG Procedure
+
+                           Model Information
+
+Training Data Set              WORK.EM_DMREG.VIEW                      
+DMDB Catalog                   WORK.REG_DMDB                           
+Target Variable                REP_trade_flag (Replacement: trade_flag)
+Target Measurement Level       Nominal                                 
+Number of Target Categories    3                                       
+Error                          MBernoulli                              
+Link Function                  Logit                                   
+Number of Model Parameters     34                                      
+Number of Observations         135                                     
+
+
+          Target Profile
+ 
+             REP_
+ Ordered     trade_         Total
+   Value     flag       Frequency
+
+       1     S                 68
+       2     H                 43
+       3     B                 24
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+
+The DMREG Procedure
+
+Newton-Raphson Ridge Optimization
+
+Without Parameter Scaling
+
+Parameter Estimates              30
+
+                                             Optimization Start
+
+Active Constraints                                  0  Objective Function                       137.28067423
+Max Abs Gradient Element                 23.059259259                                                       
+
+
+                                                                                                        Ratio
+                                                                                                      Between
+                                                                                                       Actual
+                                                                 Objective     Max Abs                    and
+                     Function         Active        Objective     Function    Gradient              Predicted
+Iter     Restarts       Calls    Constraints         Function       Change     Element     Ridge       Change
+
+   1            0           2              0         39.34581      97.9349      7.8024         0        0.940
+   2            0           3              0         25.81321      13.5326      2.4449         0        1.267
+   3            0           4              0         19.84751       5.9657      1.0019         0        1.309
+   4            0           5              0         15.96478       3.8827      0.5006         0        1.353
+   5            0           6              0         12.50695       3.4578      0.2777         0        1.377
+   6            0           7              0          8.73741       3.7695      0.5801         0        1.360
+   7            0           8              0          4.39161       4.3458      0.5936         0        1.248
+   8            0           9              0          2.10944       2.2822      0.3007         0        1.318
+   9            0          10              0          0.83897       1.2705      0.1312         0        1.284
+  10            0          11              0          0.31299       0.5260      0.0511         0        1.267
+  11            0          12              0          0.11567       0.1973      0.0192         0        1.265
+
+                                            Optimization Results
+
+Iterations                                         11  Function Calls                                     14
+Hessian Calls                                      12  Active Constraints                                  0
+Objective Function                       0.1156713154  Max Abs Gradient Element                  0.019151476
+Ridge                                               0  Actual Over Pred Change                   1.265158761
+
+Convergence criterion (ABSCONV=0.1372806742) satisfied.                                           
+
+NOTE: At least one element of the gradient is greater than 1e-3.
+
+
+
+     Likelihood Ratio Test for Global Null Hypothesis: BETA=0
+ 
+     -2 Log Likelihood          Likelihood
+  Intercept     Intercept &          Ratio
+       Only      Covariates     Chi-Square       DF     Pr > ChiSq
+
+    274.561           0.231       274.3300       28         <.0001
+
+
+             Type 3 Analysis of Effects
+ 
+                                  Wald
+Effect                DF    Chi-Square    Pr > ChiSq
+
+IMP_LOG_REP_high       2        0.6418        0.7255
+IMP_LOG_REP_low        2        0.0342        0.9830
+IMP_LOG_REP_open       1        1.2983        0.2545
+LOG_REP_close          1        0.0000        1.0000
+M_LOG_REP_high         2        1.4905        0.4746
+M_LOG_REP_low          0        0.0000         .    
+M_LOG_REP_open         0        0.0000         .    
+REP_change_flag        4        3.2583        0.5156
+stock_code            12       50.9975        <.0001
+vol                    2        0.1809        0.9135
+
+
+                                      Analysis of Maximum Likelihood Estimates
+ 
+                         REP_
+                         trade_                      Standard          Wald                  Standardized
+Parameter                flag      DF    Estimate       Error    Chi-Square    Pr > ChiSq        Estimate    Exp(Est)
+
+Intercept                S          1     -7049.4      2498.3          7.96        0.0048                       0.000
+Intercept                H          1     -3469.4       807.2         18.47        <.0001                       0.000
+IMP_LOG_REP_high         S          1     -1154.8      2230.0          0.27        0.6046          -288.2       0.000
+IMP_LOG_REP_high         H          1     -1425.5      1859.5          0.59        0.4433          -355.7       0.000
+IMP_LOG_REP_low          S          1      -504.2      2784.2          0.03        0.8563          -125.3       0.000
+IMP_LOG_REP_low          H          1      -209.9      2182.3          0.01        0.9234        -52.1511       0.000
+IMP_LOG_REP_open         S          1      3983.1           .           .           .                   .     999.000
+IMP_LOG_REP_open         H          1      1752.0      1537.6          1.30        0.2545           436.2     999.000
+LOG_REP_close            S          1      5146.6           .           .           .                   .     999.000
+LOG_REP_close            H          1      4035.5           .           .           .                   .     999.000
+M_LOG_REP_high   0       S          1       889.4       777.6          1.31        0.2527                     999.000
+M_LOG_REP_high   0       H          1     77.9054       104.5          0.56        0.4562                     999.000
+M_LOG_REP_low    0       S          0           0           .           .           .                   .        .   
+M_LOG_REP_low    0       H          0           0           .           .           .                   .        .   
+M_LOG_REP_open   0       S          0           0           .           .           .                   .        .   
+M_LOG_REP_open   0       H          0           0           .           .           .                   .        .   
+REP_change_flag  N       S          1     26.5637     36.3284          0.53        0.4646                     999.000
+REP_change_flag  N       H          1     23.0783     34.3030          0.45        0.5011                     999.000
+REP_change_flag  O       S          1     18.7851     29.8713          0.40        0.5294                     999.000
+REP_change_flag  O       H          1     16.2146     28.9787          0.31        0.5758                     999.000
+stock_code       2984    S          1       228.4       149.0          2.35        0.1253                     999.000
+stock_code       2984    H          1       101.4       135.7          0.56        0.4547                     999.000
+stock_code       5165    S          1      2790.8       849.3         10.80        0.0010                     999.000
+stock_code       5165    H          1      1602.4       336.2         22.71        <.0001                     999.000
+stock_code       5285    S          1     -7270.4      2030.4         12.82        0.0003                       0.000
+stock_code       5285    H          1     -4033.5       868.4         21.57        <.0001                       0.000
+stock_code       7154    S          1      1203.7       345.2         12.16        0.0005                     999.000
+stock_code       7154    H          1       714.5       166.1         18.51        <.0001                     999.000
+stock_code       7216    S          1     -1122.4       545.2          4.24        0.0395                       0.000
+stock_code       7216    H          1      -662.0       476.9          1.93        0.1651                       0.000
+stock_code       8125    S          1      -876.0       279.9          9.80        0.0017                       0.000
+stock_code       8125    H          1      -518.3       184.1          7.92        0.0049                       0.000
+vol                      S          1    -0.00050     0.00301          0.03        0.8682         -3.0409       1.000
+vol                      H          1    -0.00059     0.00299          0.04        0.8424         -3.6132       0.999
+
+
+               Odds Ratio Estimates
+                         
+                                 REP_
+                                 trade_       Point
+Effect                           flag      Estimate
+
+IMP_LOG_REP_high                 S           <0.001
+IMP_LOG_REP_high                 H           <0.001
+IMP_LOG_REP_low                  S           <0.001
+IMP_LOG_REP_low                  H           <0.001
+IMP_LOG_REP_open                 S          999.000
+IMP_LOG_REP_open                 H          999.000
+LOG_REP_close                    S          999.000
+LOG_REP_close                    H          999.000
+M_LOG_REP_high   0 vs 1          S          999.000
+M_LOG_REP_high   0 vs 1          H          999.000
+M_LOG_REP_low    0 vs 1          S             .   
+M_LOG_REP_low    0 vs 1          H             .   
+M_LOG_REP_open   0 vs 1          S             .   
+M_LOG_REP_open   0 vs 1          H             .   
+REP_change_flag  N vs P          S          999.000
+REP_change_flag  N vs P          H          999.000
+REP_change_flag  O vs P          S          999.000
+REP_change_flag  O vs P          H          999.000
+stock_code       2984 vs 9091    S           <0.001
+stock_code       2984 vs 9091    H           <0.001
+stock_code       5165 vs 9091    S           <0.001
+stock_code       5165 vs 9091    H           <0.001
+stock_code       5285 vs 9091    S           <0.001
+stock_code       5285 vs 9091    H           <0.001
+stock_code       7154 vs 9091    S           <0.001
+stock_code       7154 vs 9091    H           <0.001
+stock_code       7216 vs 9091    S           <0.001
+stock_code       7216 vs 9091    H           <0.001
+stock_code       8125 vs 9091    S           <0.001
+stock_code       8125 vs 9091    H           <0.001
+vol                              S            1.000
+vol                              H            0.999

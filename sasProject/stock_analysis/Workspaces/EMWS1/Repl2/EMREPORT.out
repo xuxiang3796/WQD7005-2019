@@ -1,0 +1,10 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Replacement Counts
+
+Obs     Variable       Role     Label    Train    Validation
+
+ 1     change_flag    INPUT               135         61    
+ 2     trade_flag     TARGET              135         61    

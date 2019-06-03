@@ -1,0 +1,78 @@
+*------------------------------------------------------------*
+User:                dante
+Date:                May 12, 2019
+Time:                22:31:56
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+            Measurement    Frequency
+Role           Level         Count
+ 
+INPUT        INTERVAL          5
+INPUT        NOMINAL           2
+REJECTED     INTERVAL          4
+REJECTED     NOMINAL           1
+TARGET       NOMINAL           1
+TIMEID       INTERVAL          1
+ 
+ 
+ 
+ 
+Partition Summary
+ 
+                                     Number of
+Type             Data Set          Observations
+ 
+DATA        EMWS1.Repl_TRAIN            196
+TRAIN       EMWS1.Part_TRAIN            135
+VALIDATE    EMWS1.Part_VALIDATE          61
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Summary Statistics for Class Targets
+ 
+Data=DATA
+ 
+              Numeric    Formatted    Frequency
+ Variable      Value       Value        Count      Percent    Label
+ 
+trade_flag       .         buy            35       17.8571
+trade_flag       .         hold           63       32.1429
+trade_flag       .         sell           98       50.0000
+ 
+ 
+Data=TRAIN
+ 
+              Numeric    Formatted    Frequency
+ Variable      Value       Value        Count      Percent    Label
+ 
+trade_flag       .         buy            24       17.7778
+trade_flag       .         hold           43       31.8519
+trade_flag       .         sell           68       50.3704
+ 
+ 
+Data=VALIDATE
+ 
+              Numeric    Formatted    Frequency
+ Variable      Value       Value        Count      Percent    Label
+ 
+trade_flag       .         buy            11       18.0328
+trade_flag       .         hold           20       32.7869
+trade_flag       .         sell           30       49.1803

@@ -1,0 +1,192 @@
+*------------------------------------------------------------*
+* Training Log
+Date:                May 12, 2019
+Time:                23:04:51
+*------------------------------------------------------------*
+10866  proc freq data=EMWS1.Trans_VariableSet noprint;
+10867  table ROLE*LEVEL/out=WORK.TransMETA;
+10868  run;
+
+NOTE: There were 13 observations read from the data set EMWS1.TRANS_VARIABLESET.
+NOTE: The data set WORK.TRANSMETA has 5 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.00 seconds
+      
+
+10869  proc print data=WORK.TransMETA label noobs;
+10870  var ROLE LEVEL COUNT;
+10871  label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+10872  title9 ' ';
+10873  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+10874  run;
+
+NOTE: There were 5 observations read from the data set WORK.TRANSMETA.
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10875  title10;
+
+10876  data WORK.M03JGX_Z;
+10877  set WORK.M03JGX_Z;
+10878  if (METHOD='NONE' and ROLE ne 'FREQ') or (role = 'REJECTED' and METHOD = 'DEFAULT') then delete;
+10879  run;
+
+NOTE: There were 13 observations read from the data set WORK.M03JGX_Z.
+NOTE: The data set WORK.M03JGX_Z has 8 observations and 22 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10944  *------------------------------------------------------------*;
+10945  * Trans: Computing Summary Statistics;
+10946  *------------------------------------------------------------*;
+10947  data WORK.M0E1LBD0;
+10948  set WORK.M0E1LBD0;
+10949  if (role = 'REJECTED') then role = 'INPUT';
+10950  run;
+
+NOTE: There were 8 observations read from the data set WORK.M0E1LBD0.
+NOTE: The data set WORK.M0E1LBD0 has 8 observations and 22 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+10951  *------------------------------------------------------------* ;
+10952  * EM: DMDBClass Macro ;
+10953  *------------------------------------------------------------* ;
+10954  %macro DMDBClass;
+10955      change_flag(ASC) stock_code(ASC) trade_flag(DESC)
+10956  %mend DMDBClass;
+10957  *------------------------------------------------------------* ;
+10958  * EM: DMDBVar Macro ;
+10959  *------------------------------------------------------------* ;
+10960  %macro DMDBVar;
+10961      REP_close REP_high REP_low REP_open vol
+10962  %mend DMDBVar;
+10963  *------------------------------------------------------------*;
+10964  * EM: Create DMDB;
+10965  *------------------------------------------------------------*;
+10966  proc dmdb batch data=EMWS1.Part_TRAIN
+10967  dmdbcat=WORK.EM_DMDB
+10968  classout=WORK.Transclassout
+10969  maxlevel = 513
+10970  ;
+10971  class %DMDBClass;
+10972  var %DMDBVar;
+10973  target
+10974  trade_flag
+10975  ;
+10976  run;
+
+NOTE: Records processed = 135   Memory used = 511K.
+NOTE: There were 135 observations read from the data set EMWS1.PART_TRAIN.
+NOTE: The data set WORK.TRANSCLASSOUT has 13 observations and 9 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+10977  quit;
+10978  *--- end code ---*;
+
+10979  data WORK.TransINTERVALMETA;
+10980  set WORK.M03JGX_Z;
+10981  if LEVEL ne 'INTERVAL' then delete;
+10982  run;
+
+NOTE: There were 8 observations read from the data set WORK.M03JGX_Z.
+NOTE: The data set WORK.TRANSINTERVALMETA has 5 observations and 22 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10983  *------------------------------------------------------------*;
+10984  * Trans: Determining Variables to Scale;
+10985  *------------------------------------------------------------*;
+10986  data WORK.M3K4ODJY;
+10987  set WORK.M3K4ODJY;
+10988  where (TYPE="N" and (METHOD in("MAX_NORM", "MAX_CORR", "EQUALIZE", "OP_MAX_NORM", "OP_EQUALIZE"))) or (ROLE eq "FREQ");
+10989  run;
+
+NOTE: There were 0 observations read from the data set WORK.M3K4ODJY.
+      WHERE ((TYPE='N') and METHOD in ('EQUALIZE', 'MAX_CORR', 'MAX_NORM', 'OP_EQUALIZE', 'OP_MAX_NORM')) or (ROLE='FREQ');
+NOTE: The data set WORK.M3K4ODJY has 0 observations and 22 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: This SAS session is using a registry in WORK.  All changes will be lost at the end of this session.
+*------------------------------------------------------------* 
+*  Trans: Creating EMWS1.Trans_RESULT 
+*------------------------------------------------------------* 
+WARNING: Multiple lengths were specified for the BY variable NAME by input data sets. This might cause unexpected results.
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+11044  data EMWS1.Trans_RESULT;
+11045  length NAME $32 FORMULA $70 POWER 8 ROLE $32 LEVEL $10 INPUTNAME $32 INPUTTYPE $1 LABEL $44;
+11046  label INPUTNAME ='Input Name' NAME='Name' POWER='Power' FORMULA='Formula' ROLE='Role' INPUTLEVEL='Input Level' LEVEL='Level' INPUTTYPE='Input Type' TYPE='Type';
+11047  set EMWS1.Trans_RESULT;
+11048  if INPUTNAME = '' then INPUTNAME = "Mixture of variables";
+11049  run;
+
+NOTE: There were 4 observations read from the data set EMWS1.TRANS_RESULT.
+NOTE: The data set EMWS1.TRANS_RESULT has 4 observations and 11 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11050  data WORK.M32KFGTA;
+11051  set WORK.M32KFGTA;
+11052  if ROLE='REJECTED' then ROLE='INPUT';
+11053  run;
+
+NOTE: There were 4 observations read from the data set WORK.M32KFGTA.
+NOTE: The data set WORK.M32KFGTA has 4 observations and 11 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+*------------------------------------------------------------* 
+*  Trans: Computing summary statistics for transformed variables 
+*------------------------------------------------------------* 
+11167  data WORK.TRANSFOR_28R5AH1_STATISTIC;
+11168  set WORK.Trans_TEMP;
+11169  run;
+
+NOTE: There were 4 observations read from the data set WORK.TRANS_TEMP.
+NOTE: The data set WORK.TRANSFOR_28R5AH1_STATISTIC has 4 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11170  proc print data = EMWS1.Trans_RESULT(obs=500) noobs label;
+11171  title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_computedtransformations_title, NOQUOTE))";
+11172  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_maxObsPrinted_title, NOQUOTE))";
+11173  var INPUTNAME ROLE INPUTLEVEL NAME LEVEL FORMULA;
+11174  run;
+
+NOTE: There were 4 observations read from the data set EMWS1.TRANS_RESULT.
+NOTE: The PROCEDURE PRINT printed page 2.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11175  title9;
+11176  title10;
+

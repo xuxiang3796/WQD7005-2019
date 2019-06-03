@@ -1,0 +1,24 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+Imputation Summary
+Number Of Observations
+
+                                                                                                                                      Number of
+  Variable      Impute                          Indicator        Impute             Measurement                                         Missing
+    Name        Method    Imputed Variable       Variable        Value     Role        Level                   Label                  for TRAIN
+
+LOG_REP_high     MEAN     IMP_LOG_REP_high    M_LOG_REP_high    0.91110    INPUT     INTERVAL      Transformed: Replacement: high            22
+LOG_REP_low      MEAN     IMP_LOG_REP_low     M_LOG_REP_low     0.90045    INPUT     INTERVAL      Transformed: Replacement: low             22
+LOG_REP_open     MEAN     IMP_LOG_REP_open    M_LOG_REP_open    0.90460    INPUT     INTERVAL      Transformed: Replacement: open            22
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Distribution Training Data
+
+        Number of
+          Missing    Number of    Percent of
+Obs     for TRAIN    Variables     Variables
+
+ 1             22        3            100   

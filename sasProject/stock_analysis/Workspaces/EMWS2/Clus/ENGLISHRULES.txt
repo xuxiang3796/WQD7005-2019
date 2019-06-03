@@ -1,0 +1,60 @@
+*------------------------------------------------------------*
+ Node = 5
+*------------------------------------------------------------*
+if vol >= 90204.5
+AND high < 5.01 or MISSING
+then 
+ Tree Node Identifier   = 5
+ Number of Observations = 790
+ Predicted: _SEGMENT_=1  = 0.00
+ Predicted: _SEGMENT_=3  = 1.00
+ Predicted: _SEGMENT_=2  = 0.00
+ 
+*------------------------------------------------------------*
+ Node = 6
+*------------------------------------------------------------*
+if vol < 115017 or MISSING
+AND high >= 5.01
+then 
+ Tree Node Identifier   = 6
+ Number of Observations = 1135
+ Predicted: _SEGMENT_=1  = 0.00
+ Predicted: _SEGMENT_=3  = 0.00
+ Predicted: _SEGMENT_=2  = 1.00
+ 
+*------------------------------------------------------------*
+ Node = 7
+*------------------------------------------------------------*
+if vol >= 115017
+AND high >= 5.01
+then 
+ Tree Node Identifier   = 7
+ Number of Observations = 28
+ Predicted: _SEGMENT_=1  = 0.00
+ Predicted: _SEGMENT_=3  = 0.75
+ Predicted: _SEGMENT_=2  = 0.25
+ 
+*------------------------------------------------------------*
+ Node = 8
+*------------------------------------------------------------*
+if vol < 90204.5 or MISSING
+AND high < 4.755 or MISSING
+then 
+ Tree Node Identifier   = 8
+ Number of Observations = 25793
+ Predicted: _SEGMENT_=1  = 1.00
+ Predicted: _SEGMENT_=3  = 0.00
+ Predicted: _SEGMENT_=2  = 0.00
+ 
+*------------------------------------------------------------*
+ Node = 9
+*------------------------------------------------------------*
+if vol < 90204.5 or MISSING
+AND high < 5.01 AND high >= 4.755
+then 
+ Tree Node Identifier   = 9
+ Number of Observations = 70
+ Predicted: _SEGMENT_=1  = 0.97
+ Predicted: _SEGMENT_=3  = 0.00
+ Predicted: _SEGMENT_=2  = 0.03
+ 

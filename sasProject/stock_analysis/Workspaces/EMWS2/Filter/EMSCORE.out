@@ -1,0 +1,99 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+Filter Limits for Interval Variables
+(maximum 500 observations printed)
+
+                                                           Keep
+                                                Filter    Missing
+Variable    Role        Minimum      Maximum    Method    Values     Label
+
+ close      INPUT        -16.58        19.89    STDDEV       Y            
+ high       INPUT        -16.68        19.64    STDDEV       Y            
+ low        INPUT        -16.53        19.44    STDDEV       Y            
+ open       INPUT        -16.59        19.53    STDDEV       Y            
+ vol        INPUT    -315188.71    352279.17    STDDEV       Y            
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Number Of Observations
+
+Data
+Role     Filtered    Excluded     DATA
+
+TRAIN      27816        585      28401
+ 
+                                                                                                                                                                                                                                                                
+ 
+Statistics for Original and FILTERED Data
+(maximum 500 observations printed)
+
+Data Role=TRAIN Variable=close
+
+Statistics            Original    Filtered
+
+Non Missing           28401.00    27816.00
+Missing                   0.00        0.00
+Minimum                   0.01        0.01
+Maximum                 148.80       19.60
+Mean                      1.66        1.19
+Standard Deviation        6.08        2.20
+Skewness                 15.76        4.48
+Kurtosis                339.47       25.36
+
+
+Data Role=TRAIN Variable=high
+
+Statistics            Original    Filtered
+
+Non Missing           28401.00    27816.00
+Missing                   0.00        0.00
+Minimum                   0.00        0.00
+Maximum                 149.30       19.62
+Mean                      1.48        1.01
+Standard Deviation        6.05        2.12
+Skewness                 16.11        4.74
+Kurtosis                351.00       28.76
+
+
+Data Role=TRAIN Variable=low
+
+Statistics            Original    Filtered
+
+Non Missing           28401.00    27816.00
+Missing                   0.00        0.00
+Minimum                   0.00        0.00
+Maximum                 148.30       19.44
+Mean                      1.46        1.00
+Standard Deviation        6.00        2.10
+Skewness                 16.16        4.76
+Kurtosis                352.49       29.01
+
+
+Data Role=TRAIN Variable=open
+
+Statistics            Original    Filtered
+
+Non Missing           28401.00    27816.00
+Missing                   0.00        0.00
+Minimum                   0.00        0.00
+Maximum                 148.90       19.48
+Mean                      1.47        1.00
+Standard Deviation        6.02        2.11
+Skewness                 16.13        4.76
+Kurtosis                351.32       28.95
+
+
+Data Role=TRAIN Variable=vol
+
+Statistics              Original     Filtered
+
+Non Missing             28401.00     27816.00
+Missing                     0.00         0.00
+Minimum                     0.00         0.00
+Maximum               6166504.00    352014.00
+Mean                    18545.23     11296.08
+Standard Deviation     111244.65     33682.75
+Skewness                   21.79         5.53
+Kurtosis                  723.52        36.83

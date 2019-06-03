@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?><_ROOT_  Location="CATALOG" Catalog="Sashelp.Emutil.Savext.Source" Type="SAS7BDAT" Replace="Y"
+ AllObs="Y" OutObs="1000" AllRoles="Y" Train="Y" Validate="Y" Test="Y" Score="Y" Transaction="Y"
+ ForceRun="N" RunAction="Train" Component="EMSave" Lib="AAEM61" DirectorySelector=""
+ Name="stocks7" RawCreateTime="1873023483.6" CreateTime="09MAY2019:12:18:04" LastRunMessage="Run time error was encountered.  Please see the log in the node Results window for more details."
+ RunId="6f1aa31b-02ee-440e-96ee-0c7ea23d5b36" RawLastTimeRun="1873302323.1" RawRunTime="9.7990000248"
+ LastTimeRun="12MAY2019:17:45:23" RunTime="0 Hr. 0 Min. 9.80 Sec.">
+<VARIABLEPROPERTIES/>
+<FILEPROPERTIES ><![CDATA[
+USERTRAINCODE
+USERSCORECODE
+USERREPORTCODE
+]]>
+</FILEPROPERTIES></_ROOT_>

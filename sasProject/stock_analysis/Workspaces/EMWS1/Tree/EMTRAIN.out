@@ -1,0 +1,15 @@
+                                                                 22:06 Sunday, May 12, 2019  17
+
+
+
+
+
+
+
+ 
+
+Obs    NAME                LABEL          NRULES    IMPORTANCE    VIMPORTANCE     RATIO
+
+ 1     vol                                   2        1.00000       1.00000      1.00000
+ 2     stock_code                            1        0.88976       0.84126      0.94549
+ 3     REP_open      Replacement: open       1        0.39334       0.53602      1.36274

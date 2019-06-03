@@ -1,0 +1,21 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Summary
+
+          Measurement    Frequency
+ Role        Level         Count
+
+INPUT      INTERVAL          6    
+INPUT      NOMINAL           3    
+TIMEID     INTERVAL          1    
+ 
+                                                                                                                                                                                                                                                                
+ 
+Saved Data Properties
+
+ Data                                                                                    Total           Saved        Number of
+Library                                Output Location                                Observations    Observations    Variables
+
+AAEM61     C:\Users\dante\Documents\My SAS Files\lib\aaem61\stocks7_TRAIN.sas7bdat        196             MAX            10    

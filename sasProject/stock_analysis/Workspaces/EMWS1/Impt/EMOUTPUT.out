@@ -1,0 +1,55 @@
+*------------------------------------------------------------*
+User:                dante
+Date:                May 12, 2019
+Time:                23:05:02
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+            Measurement    Frequency
+Role           Level         Count
+ 
+INPUT        INTERVAL          5
+INPUT        NOMINAL           2
+REJECTED     INTERVAL          4
+REJECTED     NOMINAL           3
+TARGET       NOMINAL           1
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+Imputation Summary
+Number Of Observations
+ 
+                                                                                                                                      Number of
+  Variable      Impute                          Indicator        Impute             Measurement                                         Missing
+    Name        Method    Imputed Variable       Variable        Value     Role        Level                   Label                  for TRAIN
+ 
+LOG_REP_high     MEAN     IMP_LOG_REP_high    M_LOG_REP_high    0.91110    INPUT     INTERVAL      Transformed: Replacement: high            22
+LOG_REP_low      MEAN     IMP_LOG_REP_low     M_LOG_REP_low     0.90045    INPUT     INTERVAL      Transformed: Replacement: low             22
+LOG_REP_open     MEAN     IMP_LOG_REP_open    M_LOG_REP_open    0.90460    INPUT     INTERVAL      Transformed: Replacement: open            22
+ 
+ 
+ 
+ 
+Variable Distribution Training Data
+ 
+        Number of
+          Missing    Number of    Percent of
+Obs     for TRAIN    Variables     Variables
+ 
+ 1             22        3            100

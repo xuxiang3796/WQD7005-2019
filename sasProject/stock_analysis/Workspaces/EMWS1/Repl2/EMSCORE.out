@@ -1,0 +1,16 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Replacement Values for Class Variables
+
+                                     Character
+               Formatted            Unformatted    Numeric    Replacement
+ Variable        Value      Type       Value        Value        Value       Label
+
+change_flag      pos         C         pos            .            P              
+change_flag      non         C         non            .            O              
+change_flag      neg         C         neg            .            N              
+trade_flag       sell        C         sell           .            S              
+trade_flag       hold        C         hold           .            H              
+trade_flag       buy         C         buy            .            B              

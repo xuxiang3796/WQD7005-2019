@@ -1,0 +1,88 @@
+*------------------------------------------------------------*
+User:                dante
+Date:                May 12, 2019
+Time:                17:45:21
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      INTERVAL          6
+INPUT      NOMINAL           3
+TIMEID     INTERVAL          1
+ 
+ 
+ 
+ 
+ 
+The CONTENTS Procedure
+ 
+Data Set Name        EMWS1.FIMPORT_DATA            Observations          196
+Member Type          DATA                          Variables             10
+Engine               V9                            Indexes               0
+Created              05/12/2019 17:45:20           Observation Length    88
+Last Modified        05/12/2019 17:45:20           Deleted Observations  0
+Protection                                         Compressed            NO
+Data Set Type                                      Sorted                NO
+Label
+Data Representation  WINDOWS_64
+Encoding             wlatin1  Western (Windows)
+ 
+ 
+                                         Engine/Host Dependent Information
+ 
+Data Set Page Size          65536
+Number of Data Set Pages    1
+First Data Page             1
+Max Obs per Page            743
+Obs in First Data Page      196
+Number of Data Set Repairs  0
+ExtendObsCounter            YES
+Filename                    C:\Users\dante\Documents\My SAS Files\9.4\stock3\Workspaces\EMWS1\fimport_data.sas7bdat
+Release Created             9.0401M3
+Host Created                X64_8HOME
+ 
+ 
+           Alphabetic List of Variables and Attributes
+ 
+ #    Variable             Type    Len    Format       Informat
+ 
+ 9    change_flag          Char      3    $3.          $3.
+ 8    change_percentage    Char     20    $20.         $20.
+ 4    close                Num       8    BEST12.      BEST32.
+ 1    date                 Num       8    YYMMDD10.    YYMMDD10.
+ 5    high                 Num       8    BEST12.      BEST32.
+ 6    low                  Num       8    BEST12.      BEST32.
+ 3    open                 Num       8    BEST12.      BEST32.
+ 2    stock_code           Num       8    BEST12.      BEST32.
+10    trade_flag           Char      4    $4.          $4.
+ 7    vol                  Num       8    BEST12.      BEST32.
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Exported Attributes for TRAIN Port
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      INTERVAL          6
+INPUT      NOMINAL           3
+TIMEID     INTERVAL          1

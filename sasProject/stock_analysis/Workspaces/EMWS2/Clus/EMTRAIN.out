@@ -1,0 +1,97 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Summary
+
+            Measurement    Frequency
+Role           Level         Count
+
+INPUT        INTERVAL          5    
+INPUT        NOMINAL           1    
+REJECTED     NOMINAL           2    
+ 
+                                                                                                                                                                                                                                                                
+ 
+The CLUSTER Procedure
+Ward's Minimum Variance Cluster Analysis
+
+            Eigenvalues of the Covariance Matrix
+ 
+        Eigenvalue    Difference    Proportion    Cumulative
+
+   1    1109225462    1109225444        1.0000        1.0000
+   2            17            17        0.0000        1.0000
+   3             1             1        0.0000        1.0000
+   4             0             0        0.0000        1.0000
+   5             0                      0.0000        1.0000
+
+Root-Mean-Square Total-Sample Standard Deviation    14894.47
+
+Root-Mean-Square Distance Between Observations    47100.43
+
+
+                                                 Cluster History
+  Number
+      of                                                 Semipartial                 Pseudo F       Pseudo
+Clusters    ------Clusters Joined-------         Freq       R-Square    R-Square    Statistic    t-Squared    Tie
+
+      49    OB31            OB46                   37         0.0000        1.00         9E12           .     T  
+      48    OB17            CL49                   95         0.0000        1.00         7E12          839       
+      47    OB24            OB45                 1004         0.0000        1.00         5E12         8630    T  
+      46    CL48            CL47                 1099         0.0000        1.00         2E12         4578       
+      45    OB2             OB42                  745         0.0000        1.00         8E11         82E3       
+      44    OB6             OB8                   187         0.0000        1.00         1E11         13E5       
+      43    OB23            OB28                 2440         0.0000        1.00         54E9         28E5       
+      42    CL44            OB41                 1264         0.0000        1.00         74E8         19E3       
+      41    OB38            OB43                  106         0.0000        1.00         38E8         18E6       
+      40    OB14            OB25                   19         0.0000        1.00         19E8         14E6       
+      39    OB15            OB30                   62         0.0000        1.00         95E7         49E6       
+      38    OB4             OB9                    84         0.0000        1.00         55E7         97E6       
+      37    OB26            OB33                  257         0.0000        1.00         37E7         12E7       
+      36    CL45            CL43                 3185         0.0000        1.00         28E7         36E4       
+      35    OB21            CL41                12667         0.0000        1.00         21E7         14E4       
+      34    OB3             OB34                  263         0.0000        1.00         16E7         68E7       
+      33    OB32            OB48                 1814         0.0000        1.00         13E7         56E7       
+      32    OB18            OB27                   61         0.0000        1.00         81E6         53E7       
+      31    CL36            OB7                  8093         0.0000        1.00         57E6         55E3       
+      30    OB20            OB37                   64         0.0000        1.00         43E6         79E7       
+      29    OB22            OB49                   76         0.0000        1.00         35E6         96E7       
+      28    OB1             OB5                   615         0.0000        1.00         29E6         99E7       
+      27    OB12            OB39                   62         0.0000        1.00         25E6         67E7       
+      26    OB10            OB44                  122         0.0000        1.00         22E6         13E8       
+      25    CL31            CL34                 8356         0.0000        1.00         19E6         11E3       
+      24    OB11            OB19                   66         0.0000        1.00         17E6         14E8       
+      23    CL40            CL37                  276         0.0000        1.00         15E6         3297       
+      22    CL39            OB36                  177         0.0000        1.00         14E6         4843       
+      21    CL25            CL42                 9620         0.0000        1.00         13E6         8111       
+      20    OB35            OB40                  103         0.0000        1.00         11E6         45E8       
+      19    OB13            CL22                  183         0.0000        1.00         97E5          443       
+      18    CL38            OB50                  702         0.0000        1.00         79E5         54E3       
+      17    CL28            CL30                  679         0.0001        1.00         67E5         2855       
+      16    CL46            CL35                13766         0.0001        1.00         55E5         95E4       
+      15    CL17            OB29                  710         0.0001        1.00         46E5         1019       
+      14    CL18            CL27                  764         0.0003        .999         31E5         3565       
+      13    CL21            OB47                 9835         0.0003        .999         25E5          8E4       
+      12    CL26            CL23                  398         0.0004        .999         19E5         7183       
+      11    CL13            CL16                23601         0.0004        .998         16E5         27E3       
+      10    CL32            CL29                  137         0.0012        .997          1E6         16E3       
+       9    CL24            OB16                  106         0.0014        .996          8E5         14E3       
+       8    CL15            CL33                 2524         0.0025        .993         58E4         38E3       
+       7    CL19            CL20                  286         0.0029        .990         47E4         13E3       
+       6    CL9             CL10                  243         0.0103        .980         27E4          948       
+       5    CL14            CL12                 1162         0.0134        .966          2E5         22E3       
+       4    CL8             CL11                26125         0.0461        .920         11E4         35E4       
+       3    CL6             CL7                   529         0.0483        .872         95E3         1595       
+       2    CL4             CL5                 27287         0.1815        .691         62E3         78E3       
+       1    CL2             CL3                 27816         0.6905        .000           .          62E3       
+ 
+                                                                                                                                                                                                                                                                
+ 
+Candidates for Optimum Number of Clusters
+
+        Number     Clustering
+          of          Cubic
+Obs    Clusters     Criterion
+
+ 1         3        -19.2235 
